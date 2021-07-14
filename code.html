@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>JavaScript Base Template</title>
+    <title>Taco Cat | The Code</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,22 +10,19 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
     <link rel="stylesheet" href="/css/prism.css">
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/all.min.css">
-
 </head>
 
 <body class="d-flex flex-column h-100">
-
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
             <img src="/img/favicontextmuted.png" alt="" width="30" class="favicontopleft">
-            <a class="navbar-brand" href="/index.html"> JS Template</a>
+            <a class="navbar-brand" href="/index.html">Taco Cat</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,18 +39,104 @@
                         <a class="nav-link active" href="/code.html">The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about.html">About Me</a>
+                        <a class="nav-link" href="https://dickjiang.netlify.app/" target="_blank">About Me</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <main class="flex-shrink-0">
-        <div class="container">
-            <h1 class="mt-5">Template with dark fixed navbar and sticky footer</h1>
-            <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and
-                CSS. A fixed navbar has been added with padding-top: 60px; on the main > .container.</p>
+    <main class="flex-shrink-0" id="content">
+        <div class="container col-xxl-8 px-4 py-5 mt-5">
+            <h2 class="border-1 border-bottom border-dark">The Code</h2>
+            <div class="row">
+                <div class="col" id="codeCol">
+                    <pre>
+                        <code class="language-javascript line-numbers">
+                            //Wrapper function/method - a function that calls other functions
+                            function getWord() {
+                                //access the webpage and gets the value from the inputs
+                                let word = document.getElementById("word").value;
+
+                                //takes away capitilization, special characters and spaces from the word
+                                let modifiedWord = word.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+
+                                //takes the word and flips it and sets it to a value
+                                let revWord = flipWord(modifiedWord);
+
+                                //setting up boolean and an empty string for error codes
+                                let errorState = false;
+                                let errorMsg = "";
+
+                                //this becomes true if the word and it's palindrome doesn't equal
+                                if (revWord != modifiedWord) {
+                                    errorState = true;
+                                    errorMsg += "This word is not a palindrome&lt;hr/>"
+                                    errorMsg += "Your word reversed is " + modifiedWord
+                                }
+
+                                //this becomes true if they didn't put enough letters to have a palindrome
+                                if (modifiedWord.length &lt; 2) {
+                                    errorState = true;
+                                    errorMsg += "You didn't add enough letters for this."
+                                }
+
+                                //if any of the previous becomes true, a SweetAlert will fire and exit the function
+                                if (errorState) {
+                                    Swal.fire(
+                                        'Something went wrong',
+                                        `${errorMsg}`,
+                                        'error'
+                                    )
+                                    return;
+                                }
+
+                                //take the word and it's plaindrome and pass it to a function that will display it
+                                displayResults(word, revWord);
+                            }
+
+                            //function that takes the value and make a string that is the word reversed
+                            function flipWord(word) {
+
+                                //creates an empty string
+                                let revWord = "";
+
+                                //for every letter in the word, create a word with the letters in reverse
+                                for (let index = word.length - 1; index >= 0; index--) {
+                                    let letter = word[index];
+
+                                    revWord += letter;
+                                }
+
+                                return revWord;
+                            }
+
+                            //take the words and display the words to the webpage
+                            function displayResults(word, revWord) {
+                                let output = document.getElementById("output");
+
+                                output.innerText = `Congrats! This is a palindrome!
+                                You entered the word ${word}. Reversed is ${revWord}.`
+                            }
+                        </code>
+                    </pre>
+                </div>
+                <div class="col-lg-4 col-sm-12" id="explainCol">
+                    <p>The code is seperated into 3 functions.</p>
+                    <h5>getWord()</h5>
+                    <p>This function is the wrapper function and is the main function. The function grabs the <strong>word</strong>
+                    value and edit it to be all lowercase with no special symbols or spaces. This is then sent to the <strong>flipWord</strong>
+                    function which then returns the reversed word and then the function runs the check for the palindromes and if <strong>errorState</strong>
+                    stays false, it will then run <strong>displayResults</strong>, otherwise a SweetAlert will happen.</p>
+                    <h5>flipWord()</h5>
+                    <p>This function takes the value and then runs an array that goes through and list the value backwards. This is 
+                        then sent out to be used as <strong>revWord</strong>.</p>
+                    <h5>displayResults()</h5>
+                    <p>This takes the <strong>word</strong> and the <strong>revWord</strong> and displays it to the webpage 
+                        with a congratulation message using innerText for successfully making a palindrome.
+                    </p>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -61,16 +144,19 @@
         <div class="container-fluid text-center text-muted">
             <div class="row">
                 <div class="col">
-                    &copy2021 <span class="text-muted">Dick Jiang | Demo Format</span>
+                    &copy2021 <span class="text-muted">Dick Jiang | djjiang708405@gmail.com</span>
                 </div>
                 <div class="col">
                     <img src="/img/favicontextmuted.png" alt="" width="30">
                     <span class="text-light text-uppercase">Dick Jiang</span>
                 </div>
                 <div class="col">
-                    <a href="#" target="_blank"><i class="fab fa-linkedin fa-2x text-muted"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-github fa-2x text-muted"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter fa-2x text-muted"></i></a>
+                    <a href="https://www.linkedin.com/in/dick-jiang-362685216/" target="_blank"><i
+                            class="fab fa-linkedin fa-2x text-linkedin"></i></a>
+                    <a href="https://github.com/Tyransaurus" target="_blank"><i
+                            class="fab fa-github fa-2x text-purple"></i></a>
+                    <a href="https://twitter.com/DickJiang3" target="_blank"><i
+                            class="fab fa-twitter fa-2x text-twitter"></i></a>
                 </div>
 
             </div>
@@ -90,5 +176,4 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/all.min.js"></script>
 </body>
-
 </html>
