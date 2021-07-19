@@ -17,7 +17,7 @@ function getWord() {
     if (revWord != modifiedWord) {
         errorState = true;
         errorMsg += "This word is not a palindrome<hr/>"
-        errorMsg += "Your word reversed is " + modifiedWord
+        errorMsg += "Your word reversed is " + revWord
     }
 
     //this becomes true if they didn't put enough letters to have a palindrome
